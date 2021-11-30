@@ -11,6 +11,11 @@
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+//トップページ//
+Route::get('/','PagesController@index')->name('project_Q&A');
