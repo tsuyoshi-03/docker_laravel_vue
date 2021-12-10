@@ -11,10 +11,12 @@
 |
 */
 
-/*
 Route::get('/', function () {
     return view('welcome');
 });
-*/
 
-Route::get('/','PagesController@index')->name('project_Q&A');
+//Route::get('/','PagesController@index')->name('project_Q&A');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
