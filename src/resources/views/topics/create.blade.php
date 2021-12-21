@@ -3,6 +3,15 @@
 <div class="container">
 	<p>新規投稿画面だよ</p>
     <div class="col-md-8">
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+          </div>
+        @endif
         <form action="{{ route('topics.store') }}" method="POST">
         {{csrf_field()}}
             <div class="form-group">
@@ -11,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label>内容</label>
-                <textarea class="form-control" placeholder="内容" rows="5" name="body"></textarea>
+                <textarea class="form-control" placeholder="内容" rows="5" name="contents"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">作成する</button>
         </form>

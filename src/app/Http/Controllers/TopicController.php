@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TopicRequest;
+
+use App\Topic;
+
+use Auth;
 
 class TopicController extends Controller
 {
@@ -13,7 +18,8 @@ class TopicController extends Controller
      */
     public function index()
     {
-        return view('topics.index');
+        $topics = Topic::all();
+        return view('topics.index',compact('topics'));
     }
 
     /**
@@ -32,9 +38,27 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TopicRequest $request)
     {
-        dd($request);
+        //リクエストパラメータを確認
+        //dd($request);
+
+        //インスタンスを作成
+        $topic = new Topic;
+        //ユーザー入力のtitleを代入
+        $topic->title = $request->title;
+        //ユーザー入力のcontentsを代入
+        $topic->contents = $request->contents;
+        //ログイン中のユーザーidを代入
+        $topic->user_id = Auth::id();
+
+        //DBに保存するデータを確認
+        //dd($topic->title, $topic->contents, $topic->user_id);
+
+        //保存する
+        $topic->save();
+
+        return redirect()->route('topics.index');
     }
 
     /**
