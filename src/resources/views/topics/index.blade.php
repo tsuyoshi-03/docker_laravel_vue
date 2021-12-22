@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-	<p>ログイン後のトップページだよ</p>
     <div>
         <a href="{{ route('topics.create') }}">新規投稿</a>
     </div>
@@ -13,6 +12,7 @@
         <div class="card-body">
             <h5 class="card-title">タイトル：{{ $topic->title }}</h5>
             <p class="card-text">内容：{{ $topic->contents }}</p>
+            <p class="card-text">投稿者：{{ $topic->user->name }}</p>
             <a href="{{ route('topics.show', $topic->id) }}" class="btn btn-primary">詳細へ</a>
         </div>
         <div class="card-footer text-muted">

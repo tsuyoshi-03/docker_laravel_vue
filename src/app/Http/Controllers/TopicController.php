@@ -11,6 +11,11 @@ use Auth;
 
 class TopicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +24,7 @@ class TopicController extends Controller
     public function index()
     {
         $topics = Topic::all();
+        $topics->load('user');
         return view('topics.index',compact('topics'));
     }
 
@@ -40,24 +46,16 @@ class TopicController extends Controller
      */
     public function store(TopicRequest $request)
     {
-        //リクエストパラメータを確認
-        //dd($request);
-
-        //インスタンスを作成
-        $topic = new Topic;
-        //ユーザー入力のtitleを代入
-        $topic->title = $request->title;
-        //ユーザー入力のcontentsを代入
-        $topic->contents = $request->contents;
-        //ログイン中のユーザーidを代入
-        $topic->user_id = Auth::id();
-
-        //DBに保存するデータを確認
+        //$topic = new Topic;
+        //$topic->title = $request->title;
+        //$topic->contents = $request->contents;
+        //$topic->user_id = Auth::id();
         //dd($topic->title, $topic->contents, $topic->user_id);
+        //$topic->save();
 
-        //保存する
-        $topic->save();
-
+        $input = $request->all();
+        $input['user_id'] = Auth::id();
+        Topic::create($input);
         return redirect()->route('topics.index');
     }
 
@@ -81,7 +79,8 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $topic = Topic::find($id);
+        return view('topics.edit', compact('topic'));
     }
 
     /**
@@ -91,9 +90,11 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TopicRequest $request, $id)
     {
-        //
+        $topic = Topic::find($id);
+        $topic->update($request->all());
+        return view('topics.show', compact('topic'));
     }
 
     /**
@@ -104,6 +105,8 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $topic = Topic::find($id);
+        $topic -> delete();
+        return redirect()->route('topics.index');
     }
 }
