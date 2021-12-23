@@ -13,15 +13,55 @@
     </div>
     <div class="card-footer text-muted">
         <p class="text-center">投稿日時：{{ $topic->created_at }}</p>
-        <div class="d-flex justify-content-center">
-            <div><a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-primary">編集</a></div>
-            <form action='{{ route('topics.destroy', $topic->id) }}' method='post'>
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-            <div>
-                <input type='submit' value='削除' class="btn btn-danger" onclick='return confirm("削除しますか??");'>
+        @if( Auth::id() ===  $topic->user_id )
+            <div class="d-flex justify-content-center">
+                <div><a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-primary">編集</a></div>
+                <form action='{{ route('topics.destroy', $topic->id) }}' method='post'>
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                <div>
+                    <input type='submit' value='削除' class="btn btn-danger" onclick='return confirm("削除しますか??");'>
+                </div>
+                </form>
             </div>
+        @endif
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="{{ route('comments.store') }}" method="POST">
+            {{csrf_field()}}
+                <input type="hidden" name="topic_id" value="{{ $topic->id }}">
+                <div class="form-group">
+                    <label>コメント</label>
+                    <textarea class="form-control" placeholder="内容" rows="5" name="contents"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">コメントする</button>
             </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @foreach ($topic->comments as $comment)
+            <div class="card mt-3">
+                <h5 class="card-header">投稿者：{{ $comment->user->name }}</h5>
+                <div class="card-body">
+                    <h5 class="card-text">{{ $comment->contents }}</h5>
+                    <p class="card-title">投稿日時：{{ $comment->created_at }}</p>
+                </div>
+                @if( Auth::id() ===  $comment->user_id )
+                    <div class="d-flex justify-content-center">
+                        <div><a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-primary">編集</a></div>
+                        <form action='{{ route('comments.destroy', $comment->id) }}' method='post'>
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                        <div>
+                            <input type='submit' value='削除' class="btn btn-danger" onclick='return confirm("コメントを削除しますか??");'>
+                        </div>
+                        </form>
+                    </div>
+                @endif
+            </div>
+            @endforeach
         </div>
     </div>
 </div>

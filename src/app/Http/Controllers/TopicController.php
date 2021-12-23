@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 
 use App\Topic;
-
 use Auth;
 
 class TopicController extends Controller
@@ -80,6 +79,13 @@ class TopicController extends Controller
     public function edit($id)
     {
         $topic = Topic::find($id);
+
+        if(Auth::id() !== $topic->user_id){
+            //return abort(404);
+            //return view('topics.show', compact('topic'));
+            return back();
+        }
+
         return view('topics.edit', compact('topic'));
     }
 
@@ -93,6 +99,11 @@ class TopicController extends Controller
     public function update(TopicRequest $request, $id)
     {
         $topic = Topic::find($id);
+
+        if(Auth::id() !== $topic->user_id){
+            return back();
+        }
+
         $topic->update($request->all());
         return view('topics.show', compact('topic'));
     }
@@ -106,7 +117,12 @@ class TopicController extends Controller
     public function destroy($id)
     {
         $topic = Topic::find($id);
-        $topic -> delete();
+
+        if(Auth::id() !== $topic->user_id){
+            return back();
+        }
+
+        $topic->delete();
         return redirect()->route('topics.index');
     }
 }

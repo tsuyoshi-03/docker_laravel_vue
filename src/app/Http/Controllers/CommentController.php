@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
+
+use App\Topic;
+use Auth;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +42,16 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //
+        //$topic = Topic::find($request->topic_id);
+        $comment = new Comment;
+        $comment->contents = $request->contents;
+        $comment->user_id = Auth::id();
+        $comment->topic_id = $request->topic_id;
+        $comment->save();
+        //return view('topics.show', compact('topic'));
+        return back();
     }
 
     /**
@@ -45,7 +62,9 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $topic = Topic::find($id);
+        $topic->load('user','comments');
+        return view('topics.show', compact('topic'));
     }
 
     /**
@@ -56,7 +75,13 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        if(Auth::id() !== $comment->user_id){
+            return back();
+        }
+
+        return view('comments.edit', compact('comment'));
     }
 
     /**
@@ -66,9 +91,17 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CommentRequest $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+        $topic = Topic::find($comment->topic_id);
+
+        if(Auth::id() !== $comment->user_id){
+            return back();
+        }
+
+        $comment->update($request->all());
+        return view('topics.show',compact('topic'));
     }
 
     /**
@@ -79,6 +112,14 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+        $topic = Topic::find($comment->topic_id);
+
+        if(Auth::id() !== $comment->user_id){
+            return back();
+        }
+
+        $comment->delete();
+        return view('topics.show',compact('topic'));
     }
 }
