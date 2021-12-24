@@ -11,12 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('topics', 'TopicController');
-Route::resource('comments', 'CommentController');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/','TopicController@index');
+
+    Route::resource('topics', 'TopicController');
+    Route::resource('comments', 'CommentController');
+});
