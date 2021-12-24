@@ -1,16 +1,15 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-	<p>新規投稿画面だよ</p>
     <div class="col-md-8">
         @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-          </div>
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
         <form action="{{ route('topics.store') }}" method="POST">
         {{csrf_field()}}

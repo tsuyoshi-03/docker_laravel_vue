@@ -44,14 +44,14 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        //$topic = Topic::find($request->topic_id);
+        $topic = Topic::find($request->topic_id);
         $comment = new Comment;
         $comment->contents = $request->contents;
         $comment->user_id = Auth::id();
         $comment->topic_id = $request->topic_id;
         $comment->save();
-        //return view('topics.show', compact('topic'));
-        return back();
+        return view('topics.show', compact('topic'));
+        //return back();
     }
 
     /**
