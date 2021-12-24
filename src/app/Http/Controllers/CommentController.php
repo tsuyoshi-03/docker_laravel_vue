@@ -44,14 +44,12 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        $topic = Topic::find($request->topic_id);
         $comment = new Comment;
         $comment->contents = $request->contents;
         $comment->user_id = Auth::id();
         $comment->topic_id = $request->topic_id;
         $comment->save();
-        return view('topics.show', compact('topic'));
-        //return back();
+        return redirect()->route('topics.show', ['topic' => $request->topic_id]);
     }
 
     /**
@@ -101,7 +99,7 @@ class CommentController extends Controller
         }
 
         $comment->update($request->all());
-        return view('topics.show',compact('topic'));
+        return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
 
     /**
@@ -120,6 +118,6 @@ class CommentController extends Controller
         }
 
         $comment->delete();
-        return view('topics.show',compact('topic'));
+        return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
 }
