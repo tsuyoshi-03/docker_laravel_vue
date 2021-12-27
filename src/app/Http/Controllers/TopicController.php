@@ -20,11 +20,9 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $topics = Topic::all();
-        $topics->load('user');
-        return view('topics.index',compact('topics'));
+
+    public function index(){
+        return view('topics.index',['topics'=>Topic::all()]);
     }
 
     /**
@@ -64,11 +62,12 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    public function show(Topic $topic)
     {
-        $topic = Topic::find($id);
         return view('topics.show', compact('topic'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -76,18 +75,13 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+    public function edit(Topic $topic)
     {
-        $topic = Topic::find($id);
-
-        if(Auth::id() !== $topic->user_id){
-            //return abort(404);
-            //return view('topics.show', compact('topic'));
-            return back();
-        }
-
+        $this->authorize('update', $topic);
         return view('topics.edit', compact('topic'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -99,11 +93,7 @@ class TopicController extends Controller
     public function update(TopicRequest $request, $id)
     {
         $topic = Topic::find($id);
-
-        if(Auth::id() !== $topic->user_id){
-            return back();
-        }
-
+        $this->authorize('update', $topic);
         $topic->update($request->all());
         return view('topics.show', compact('topic'));
     }
@@ -114,14 +104,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Topic $topic)
     {
-        $topic = Topic::find($id);
-
-        if(Auth::id() !== $topic->user_id){
-            return back();
-        }
-
+        $this->authorize('delete', $topic);
         $topic->delete();
         return redirect()->route('topics.index');
     }
