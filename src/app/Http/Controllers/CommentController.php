@@ -60,9 +60,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $topic = Topic::find($id);
-        $topic->load('user','comments');
-        return view('topics.show', compact('topic'));
+        //
     }
 
     /**
@@ -71,14 +69,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comment $comment)
     {
-        $comment = Comment::find($id);
-
-        if(Auth::id() !== $comment->user_id){
-            return back();
-        }
-
+        $this->authorize('update', $comment);
         return view('comments.edit', compact('comment'));
     }
 
@@ -93,11 +86,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
         $topic = Topic::find($comment->topic_id);
-
-        if(Auth::id() !== $comment->user_id){
-            return back();
-        }
-
+        $this->authorize('update', $comment);
         $comment->update($request->all());
         return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
@@ -108,15 +97,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        $comment = Comment::find($id);
         $topic = Topic::find($comment->topic_id);
-
-        if(Auth::id() !== $comment->user_id){
-            return back();
-        }
-
+        $this->authorize('delete', $comment);
         $comment->delete();
         return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
