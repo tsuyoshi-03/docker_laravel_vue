@@ -15,8 +15,8 @@
         <p class="text-center">投稿日時：{{ $topic->created_at }}</p>
         @if( Auth::id() ===  $topic->user_id )
             <div class="d-flex justify-content-center">
-                <div><a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-primary">編集</a></div>
-                <form action='{{ route('topics.destroy', $topic->id) }}' method='post'>
+                <div><a href="{{ route('topics.edit', $topic) }}" class="btn btn-primary">編集</a></div>
+                <form action='{{ route('topics.destroy', $topic) }}' method='post'>
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                 <div>
@@ -50,8 +50,8 @@
                 </div>
                 @if( Auth::id() ===  $comment->user_id )
                     <div class="d-flex justify-content-center">
-                        <div><a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-primary">編集</a></div>
-                        <form action='{{ route('comments.destroy', $comment->id) }}' method='post'>
+                        <div><a href="{{ route('comments.edit', $comment) }}" class="btn btn-primary">編集</a></div>
+                        <form action='{{ route('comments.destroy', $comment) }}' method='post'>
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                         <div>
