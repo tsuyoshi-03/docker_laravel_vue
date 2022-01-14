@@ -13,7 +13,7 @@
             <a href="{{ route('topics.show', $topic) }}" class="btn btn-primary">詳細へ</a>
         </div>
         <div class="card-footer text-muted">
-            投稿日時：{{ $topic->created_at }}
+            投稿日時：{{ $topic->created_at->format('Y年m月d日 H時i分') }}
         </div>
     </div>
     @endforeach

@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="card-footer text-muted">
-        <p class="text-center">投稿日時：{{ $topic->created_at }}</p>
+        <p class="text-center">投稿日時：{{ $topic->created_at->format('Y年m月d日 H:i') }}</p>
         @if( Auth::id() ===  $topic->user_id )
             <div class="d-flex justify-content-center">
                 <div><a href="{{ route('topics.edit', $topic) }}" class="btn btn-primary">編集</a></div>
