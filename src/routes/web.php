@@ -22,4 +22,5 @@ Route::middleware(['auth'])->group(function(){
 
     Route::resource('topics', 'TopicController');
     Route::resource('comments', 'CommentController');
+    //Route::resource('topics.comments', 'CommentsController');
 });

@@ -46,7 +46,7 @@
                 <h5 class="card-header">投稿者：{{ $comment->user->name }}</h5>
                 <div class="card-body">
                     <h5 class="card-text">{{ $comment->contents }}</h5>
-                    <p class="card-title">投稿日時：{{ $comment->created_at }}</p>
+                    <p class="card-title">投稿日時：{{ $comment->created_at->format('Y年m月d日 H:i') }}</p>
                 </div>
                 @if( Auth::id() ===  $comment->user_id )
                     <div class="d-flex justify-content-center">
