@@ -13,7 +13,8 @@
     </div>
     <div class="card-footer text-muted">
         <p class="text-center">投稿日時：{{ $topic->created_at->format('Y年m月d日 H:i') }}</p>
-        @if( Auth::id() ===  $topic->user_id )
+        {{-- @if( Auth::id() ===  $topic->user_id ) --}}
+        @if( Auth::user()->id ===  $topic->user_id )
             <div class="d-flex justify-content-center">
                 <div><a href="{{ route('topics.edit', $topic) }}" class="btn btn-primary">編集</a></div>
                 <form action='{{ route('topics.destroy', $topic) }}' method='post'>
@@ -28,7 +29,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="{{ route('comments.store') }}" method="POST">
+            <form action="{{ route('topics.comments.store', $topic) }}" method="POST">
             {{csrf_field()}}
                 <input type="hidden" name="topic_id" value="{{ $topic->id }}">
                 <div class="form-group">
@@ -48,10 +49,11 @@
                     <h5 class="card-text">{{ $comment->contents }}</h5>
                     <p class="card-title">投稿日時：{{ $comment->created_at->format('Y年m月d日 H:i') }}</p>
                 </div>
-                @if( Auth::id() ===  $comment->user_id )
+                {{-- @if( Auth::id() ===  $comment->user_id ) --}}
+                @if( Auth::user()->id ===  $comment->user_id )
                     <div class="d-flex justify-content-center">
-                        <div><a href="{{ route('comments.edit', $comment) }}" class="btn btn-primary">編集</a></div>
-                        <form action='{{ route('comments.destroy', $comment) }}' method='post'>
+                        <div><a href="{{ route('topics.comments.edit', ['topic'=>$topic, 'comment'=>$comment,]) }}" class="btn btn-primary">編集</a></div>
+                        <form action='{{ route('topics.comments.destroy', ['topic'=>$topic, 'comment'=>$comment,]) }}' method='post'>
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                         <div>

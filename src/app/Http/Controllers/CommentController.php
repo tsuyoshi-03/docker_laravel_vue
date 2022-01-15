@@ -69,10 +69,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function edit(Topic $topic, Comment $comment)
     {
         $this->authorize('update', $comment);
-        return view('comments.edit', compact('comment'));
+        return view('comments.edit', compact('topic','comment'));
     }
 
     /**

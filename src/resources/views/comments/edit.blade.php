@@ -12,7 +12,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+            <form action="{{ route('topics.comments.update', ['topic'=>$topic, 'comment'=>$comment,]) }}" method="POST">
             {{csrf_field()}}
             {{method_field('PATCH')}}
                 <div class="form-group">

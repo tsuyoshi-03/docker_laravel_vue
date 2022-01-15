@@ -21,6 +21,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/','TopicController@index');
 
     Route::resource('topics', 'TopicController');
-    Route::resource('comments', 'CommentController');
-    //Route::resource('topics.comments', 'CommentsController');
+    //Route::resource('comments', 'CommentController');
+    Route::resource('topics.comments', 'CommentController');
 });
