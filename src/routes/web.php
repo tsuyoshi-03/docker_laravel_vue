@@ -12,15 +12,14 @@
 */
 
 
-
-Auth::routes();
+// ['verify' => true] を追記
+Auth::routes(['verify' => true]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth'])->group(function(){
+// 'verified' を追記
+Route::middleware(['auth','verified'])->group(function(){
     Route::get('/','TopicController@index');
-
     Route::resource('topics', 'TopicController');
-    //Route::resource('comments', 'CommentController');
     Route::resource('topics.comments', 'CommentController');
 });
