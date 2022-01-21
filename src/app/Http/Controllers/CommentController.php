@@ -82,13 +82,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CommentRequest $request, $id)
+    public function update(CommentRequest $request, Topic $topic, Comment $comment)
     {
-        $comment = Comment::find($id);
-        $topic = Topic::find($comment->topic_id);
         $this->authorize('update', $comment);
         $comment->update($request->all());
-        return redirect()->route('topics.show', ['topic' => $topic->id]);
+        return redirect()->route('topics.show', ['topic' => $topic->id, 'comment' => $comment->id]);
     }
 
     /**
