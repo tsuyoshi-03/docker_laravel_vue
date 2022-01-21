@@ -13,9 +13,8 @@
                 </div>
             @endif
             <form action="{{ route('topics.update', $topic) }}" method="POST">
-            {{-- <form action="{{ route('topics.update', $topic) }}" method="POST"> --}}
-            {{csrf_field()}}
-            {{method_field('PATCH')}}
+                {{csrf_field()}}
+                {{method_field('PATCH')}}
                 <div class="form-group">
                     <label>タイトル</label>
                     <input type="text" class="form-control" value="{{ $topic->title }}" name="title">
