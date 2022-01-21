@@ -12,7 +12,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('topics.update', $topic->id) }}" method="POST">
+            <form action="{{ route('topics.update', $topic) }}" method="POST">
             {{-- <form action="{{ route('topics.update', $topic) }}" method="POST"> --}}
             {{csrf_field()}}
             {{method_field('PATCH')}}

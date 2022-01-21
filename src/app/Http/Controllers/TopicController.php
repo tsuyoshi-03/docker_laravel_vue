@@ -91,18 +91,11 @@ class TopicController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(TopicRequest $request, $id)
-    // public function update(TopicRequest $request, $topic)
+    public function update(TopicRequest $request, Topic $topic)
     {
-        $topic = Topic::find($id);
         $this->authorize('update', $topic);
         $topic->update($request->all());
         return view('topics.show', compact('topic'));
-
-        // $topic = Topic::find($topic->id);
-        // $this->authorize('update', $topic);
-        // $topic->update($request->all());
-        // return view('topics.show', compact('topic'));
     }
 
     /**

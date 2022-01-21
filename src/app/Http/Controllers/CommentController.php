@@ -17,50 +17,25 @@ class CommentController extends Controller
     //}
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentRequest $request)
+    public function store(CommentRequest $request, Topic $topic)
     {
         $comment = new Comment;
         $comment->contents = $request->contents;
         $comment->user_id = Auth::id();
         $comment->topic_id = $request->topic_id;
+        //dd($comment);
         $comment->save();
-        return redirect()->route('topics.show', ['topic' => $request->topic_id]);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        //$newComment = $request->all();
+        //$newComment['user_id'] = Auth::id();
+        //Comment::create($newComment);
+
+        return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
 
     /**
@@ -86,7 +61,7 @@ class CommentController extends Controller
     {
         $this->authorize('update', $comment);
         $comment->update($request->all());
-        return redirect()->route('topics.show', ['topic' => $topic->id, 'comment' => $comment->id]);
+        return redirect()->route('topics.show', ['topic' => $topic->id]);
     }
 
     /**
@@ -97,7 +72,6 @@ class CommentController extends Controller
      */
     public function destroy(Topic $topic, Comment $comment)
     {
-        $topic = Topic::find($comment->topic_id);
         $this->authorize('delete', $comment);
         $comment->delete();
         return redirect()->route('topics.show', ['topic' => $topic->id]);
