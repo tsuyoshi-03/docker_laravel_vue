@@ -97,7 +97,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Topic $topic, Comment $comment)
     {
         $topic = Topic::find($comment->topic_id);
         $this->authorize('delete', $comment);
