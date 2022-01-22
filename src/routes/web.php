@@ -20,6 +20,16 @@ Auth::routes(['verify' => true]);
 // 'verified' を追記
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/','TopicController@index');
+
+    // ログイン中のユーザーなら誰でも確認できる
+    Route::get('user/{user}', 'UserController@show')->name('user.show');
+
+    // ログインユーザーまたは管理ユーザーのみ可能
+    Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('user/{user}', 'UserController@update')->name('user.update');
+
+
+
     Route::resource('topics', 'TopicController');
     Route::resource('topics.comments', 'CommentController');
 });
