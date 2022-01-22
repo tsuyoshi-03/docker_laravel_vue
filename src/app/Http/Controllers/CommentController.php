@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 
-use App\Topic;
+use App\Models\Topic;
 use Auth;
 
 class CommentController extends Controller

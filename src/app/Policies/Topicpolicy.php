@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Topic;
+use App\Models\Topic;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,7 +25,7 @@ class Topicpolicy
      * Determine whether the user can view the topic.
      *
      * @param  \App\User  $user
-     * @param  \App\Topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return mixed
      */
     public function view(User $user, Topic $topic)
@@ -48,7 +48,7 @@ class Topicpolicy
      * Determine whether the user can update the topic.
      *
      * @param  \App\User  $user
-     * @param  \App\Topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return mixed
      */
     public function update(User $user, Topic $topic)
@@ -60,7 +60,7 @@ class Topicpolicy
      * Determine whether the user can delete the topic.
      *
      * @param  \App\User  $user
-     * @param  \App\Topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return mixed
      */
     public function delete(User $user, Topic $topic)
@@ -72,7 +72,7 @@ class Topicpolicy
      * Determine whether the user can restore the topic.
      *
      * @param  \App\User  $user
-     * @param  \App\Topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return mixed
      */
     public function restore(User $user, Topic $topic)
@@ -84,7 +84,7 @@ class Topicpolicy
      * Determine whether the user can permanently delete the topic.
      *
      * @param  \App\User  $user
-     * @param  \App\Topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return mixed
      */
     public function forceDelete(User $user, Topic $topic)
