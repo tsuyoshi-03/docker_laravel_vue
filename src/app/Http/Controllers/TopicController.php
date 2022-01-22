@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 
-use App\Topic;
+use App\Models\Topic;
 use Auth;
 
 class TopicController extends Controller
