@@ -21,14 +21,15 @@ Auth::routes(['verify' => true]);
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/','TopicController@index');
 
-    // ログイン中のユーザーなら誰でも確認できる
+    //認証済みであればどのユーザーでもアクセス可能
     Route::get('user/{user}', 'UserController@show')->name('user.show');
 
-    // ログインユーザーまたは管理ユーザーのみ可能
+    //ログインユーザーのみアクセス可能
+    Route::get('user/mypage', 'UserController@mypage')->name('user.mypage');
+
+    //ログインユーザーまたは管理ユーザーのみアクセス可能
     Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
     Route::put('user/{user}', 'UserController@update')->name('user.update');
-
-
 
     Route::resource('topics', 'TopicController');
     Route::resource('topics.comments', 'CommentController');

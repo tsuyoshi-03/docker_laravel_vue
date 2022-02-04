@@ -48,7 +48,9 @@
 
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{{ route('topics.create') }}">新規投稿</a>
-                        <a class="dropdown-item" href="{{ route('user.show', Auth::user()) }}">マイページ</a>
+                        <a class="dropdown-item" href="{{ route('user.mypage') }}">マイページ</a>
+                        <a class="dropdown-item" href="{{ action('UserController@mypage') }}">マイページ</a>
+                        <a class="dropdown-item" href="{{ route('user.show', Auth::user() ) }}">自分の投稿</a>
 						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 							{{-- {{ __('Logout') }} --}}
                             ログアウト
