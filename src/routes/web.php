@@ -17,15 +17,15 @@ Auth::routes(['verify' => true]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
+
 // 'verified' を追記
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/','TopicController@index');
 
-    //認証済みであればどのユーザーでもアクセス可能
-    Route::get('user/{user}', 'UserController@show')->name('user.show');
-
-    //ログインユーザーのみアクセス可能
+    //自ユーザーのみアクセス可能
     Route::get('user/mypage', 'UserController@mypage')->name('user.mypage');
+    //各ユーザーの投稿ページ
+    Route::get('user/{user}', 'UserController@show')->name('user.show');
 
     //ログインユーザーまたは管理ユーザーのみアクセス可能
     Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
