@@ -10,19 +10,22 @@ use Auth;
 
 class TopicController extends Controller
 {
-    //public function __construct()
-    //{
-    //    $this->middleware('auth');
-    //}
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function index(){
-        return view('topics.index',['topics'=>Topic::all()]);
+    public function index(Request $request){
+        $search = $request->input('search');
+        $query = Topic::query();
+        if($search){
+            $query->where('title','LIKE',"%{$search}%")
+                ->orWhere('contents','LIKE',"%{$search}%");
+        }
+        $topics = $query->get();
+        return view('topics.index', compact('topics', 'search'));
+        //return view('topics.index',['topics'=>Topic::all()]);
     }
 
     /**
