@@ -24,6 +24,9 @@
             </div>
         </div>
         @endforeach
+        <div class="d-flex justify-content-center" style="margin: 15px;">
+            {{ $topics->links() }}
+        </div>
     @else
         <p style="text-align: center">投稿が見つかりませんでした</p>
     @endif

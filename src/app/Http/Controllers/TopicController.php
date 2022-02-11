@@ -23,8 +23,12 @@ class TopicController extends Controller
             $query->where('title','LIKE',"%{$search}%")
                 ->orWhere('contents','LIKE',"%{$search}%");
         }
-        $topics = $query->get();
+        $topics = $query->paginate(5);
+
+        //$topics = Topic::where('title', 'like', "%{$search}%")->get();
+
         return view('topics.index', compact('topics', 'search'));
+
         //return view('topics.index',['topics'=>Topic::all()]);
     }
 
