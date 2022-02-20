@@ -23,9 +23,11 @@ class UserController extends Controller
         return view('user.edit',compact('user'));
     }
 
-    public function update(User $user)
+    public function update(Request $request, User $user)
     {
-
+        //dd($request->all());
+        $user->fill($request->all())->save();
+        return redirect()->route('user.mypage');
     }
 
 
