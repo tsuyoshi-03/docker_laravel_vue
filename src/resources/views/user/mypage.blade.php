@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">ユーザー登録内容</div>
+                <div class="card-header">アカウント</div>
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">ニックネーム</label>
