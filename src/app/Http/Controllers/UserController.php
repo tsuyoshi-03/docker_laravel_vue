@@ -18,17 +18,33 @@ class UserController extends Controller
         return view('user.show', compact('user'));
     }
 
-    public function edit(User $user)
+    public function name_edit(User $user)
     {
-        return view('user.edit',compact('user'));
+        return view('user.name_edit',compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function name_update(Request $request, User $user)
     {
-        //dd($request->all());
+        //ユーザー登録と同じバリデーションをかけたい
         $user->fill($request->all())->save();
         return redirect()->route('user.mypage');
     }
 
+    public function email_update(Request $request, User $user)
+    {
+        //ユーザー登録と同じバリデーションをかけたい
+        //DB保存
+        //メール送信
+        Auth::logout();
+        return redirect()->route('login');
+    }
 
+    public function password_update(Request $request, User $user)
+    {
+        //ユーザー登録と同じバリデーションをかけたい
+        //DB保存
+        //メール送信
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }

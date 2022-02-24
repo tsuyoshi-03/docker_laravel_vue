@@ -27,9 +27,12 @@ Route::middleware(['auth','verified'])->group(function(){
     //各ユーザーの投稿ページ
     Route::get('user/{user}', 'UserController@show')->name('user.show');
 
-    //ログインユーザーまたは管理ユーザーのみアクセス可能
-    Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
-    Route::put('user/{user}', 'UserController@update')->name('user.update');
+
+    Route::get('name/{user}/edit', 'UserController@name_edit')->name('name.edit');
+    Route::put('name/{user}', 'UserController@name_update')->name('name.update');
+
+    //Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
+    //Route::put('user/{user}', 'UserController@update')->name('user.update');
 
     Route::resource('topics', 'TopicController');
     Route::resource('topics.comments', 'CommentController');

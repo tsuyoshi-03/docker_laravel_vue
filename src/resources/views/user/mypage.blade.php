@@ -7,18 +7,14 @@
                 <div class="card-header">アカウント</div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">ニックネーム</label>
-                        <div>
-                            <input type="text" readonly class="form-control-plaintext" value="{{ $user->name }}">
-                        </div>
+                        <label for="name">ニックネーム：</label>
+                        <p style="margin: 0px 0px 5px 0px">{{ $user->name }}</p>
+                        <a href="{{ route('name.edit', $user) }}">編集</a>
                     </div>
                     <div class="form-group">
-                        <label for="email">email</label>
-                        <div>
-                            <input type="text" readonly class="form-control-plaintext" value="{{ $user->email }}">
-                        </div>
+                        <label for="email">メールアドレス：</label>
+                        <p>{{ $user->email }}</p>
                     </div>
-                    <a href="{{ route('user.edit', $user) }}"><button class="btn btn-primary">ユーザー登録内容の編集</button></a>
                 </div>
             </div>
         </div>
