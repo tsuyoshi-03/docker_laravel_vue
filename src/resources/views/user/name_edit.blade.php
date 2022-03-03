@@ -13,6 +13,10 @@
                             <label for="name">ニックネーム</label>
                             <div>
                                 <input class="form-control" value="{{ $user->name }}" name="name">
+                                @error('name')
+                                    {{-- <div class="alert alert-danger">{{ $message }}</div> --}}
+                                    <div class="alert alert-danger">入力値が不正です</div>
+                                @enderror
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">更新する</button>

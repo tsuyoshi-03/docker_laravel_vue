@@ -27,7 +27,7 @@ class UserController extends Controller
     public function name_update(Request $request, User $user)
     {
         $this->authorize('update', $user);
-        //ユーザー登録と同じバリデーションをかけたい
+        $request->validate(['name' => ['required', 'string', 'max:255'],]);
         $user->fill($request->all())->save();
         return redirect()->route('user.mypage');
     }
