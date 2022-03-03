@@ -20,14 +20,22 @@ class UserController extends Controller
 
     public function name_edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('user.name_edit',compact('user'));
     }
 
     public function name_update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
         //ユーザー登録と同じバリデーションをかけたい
         $user->fill($request->all())->save();
         return redirect()->route('user.mypage');
+    }
+
+    public function email_edit(User $user)
+    {
+        $this->authorize('update', $user);
+        return view('user.email_edit',compact('user'));
     }
 
     public function email_update(Request $request, User $user)
@@ -37,6 +45,12 @@ class UserController extends Controller
         //メール送信
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function password_edit(User $user)
+    {
+        $this->authorize('update', $user);
+        return view('user.password_edit',compact('user'));
     }
 
     public function password_update(Request $request, User $user)
