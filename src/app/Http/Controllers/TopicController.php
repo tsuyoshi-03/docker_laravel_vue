@@ -50,16 +50,7 @@ class TopicController extends Controller
      */
     public function store(TopicRequest $request)
     {
-        //$topic = new Topic;
-        //$topic->title = $request->title;
-        //$topic->contents = $request->contents;
-        //$topic->user_id = Auth::id();
-        //dd($topic->title, $topic->contents, $topic->user_id);
-        //$topic->save();
-
-        $input = $request->all();
-        $input['user_id'] = Auth::id();
-        Topic::create($input);
+        $topic = Topic::create(['title' => $request->title, 'contents' => $request->contents, 'user_id' => Auth::id()]);
         return redirect()->route('topics.index');
     }
 
