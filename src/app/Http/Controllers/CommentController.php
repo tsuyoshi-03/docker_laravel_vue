@@ -24,16 +24,21 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request, Topic $topic)
     {
-        $comment = new Comment;
-        $comment->contents = $request->contents;
-        $comment->user_id = Auth::id();
-        $comment->topic_id = $request->topic_id;
-        //dd($comment);
-        $comment->save();
+        $comment = Comment::create(['user_id' => Auth::id(), 'topic_id' => $request->topic_id, 'contents' => $request->contents,]);
 
-        //$newComment = $request->all();
-        //$newComment['user_id'] = Auth::id();
-        //Comment::create($newComment);
+        //$comment = new Comment;
+
+        //fillでのパターン
+        // $comment->fill([
+            // 'contents' => $request->contents,
+            // 'topic_id' => $request->topic_id,
+            // 'user_id' => Auth::id(),
+            // ])->save();
+
+        //インスタンスを作成しといてCreateメソッドのパターン
+        // $comment = $request->all();
+        // $comment['user_id'] = Auth::id();
+        // Comment::create($comment);
 
         return redirect()->route('topics.show', ['topic' => $topic->id]);
     }

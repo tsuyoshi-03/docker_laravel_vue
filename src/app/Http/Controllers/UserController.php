@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
         $request->validate(['name' => ['required', 'string', 'max:255'],]);
-        $user->fill($request->all())->save();
+        $user->fill(['name' => $request->name])->save();
         return redirect()->route('user.mypage');
     }
 
