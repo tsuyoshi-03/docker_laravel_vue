@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
         $request->validate(['name' => ['required', 'string', 'max:255'],]);
-        $user->fill(['name' => $request->name])->save();
+        $user->update($request->only(['name']));
         return redirect()->route('user.mypage');
     }
 
@@ -40,9 +40,10 @@ class UserController extends Controller
 
     public function email_update(Request $request, User $user)
     {
-        //ユーザー登録と同じバリデーションをかけたい
-        //DB保存
-        //メール送信
+        $this->authorize('update', $user);
+        $request->validate(['email' => ['required', 'string', 'email', 'max:255', 'unique:users'],]);
+        //メール認証OKであれば
+        $user->update(['email' => $request->email]);
         Auth::logout();
         return redirect()->route('login');
     }

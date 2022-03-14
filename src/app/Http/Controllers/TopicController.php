@@ -50,7 +50,7 @@ class TopicController extends Controller
      */
     public function store(TopicRequest $request)
     {
-        $topic = Topic::create(['title' => $request->title, 'contents' => $request->contents, 'user_id' => Auth::id()]);
+        Topic::create(['title' => $request->title, 'contents' => $request->contents, 'user_id' => Auth::id()]);
         return redirect()->route('topics.index');
     }
 
