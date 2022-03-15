@@ -23,13 +23,8 @@ class TopicController extends Controller
             $query->where('title','LIKE',"%{$search}%")
                 ->orWhere('contents','LIKE',"%{$search}%");
         }
-        $topics = $query->paginate(5);
-
-        //$query = select * from topics where concat(title, contents) like "%{$search}%";
-        //$topics = Topic::where('title', 'like', "%{$search}%")->get();
-
+        $topics = $query->latest()->paginate(5);
         return view('topics.index', compact('topics', 'search'));
-        //return view('topics.index',['topics'=>Topic::all()]);
     }
 
     /**
