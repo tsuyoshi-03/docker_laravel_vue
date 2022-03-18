@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Topic;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -13,9 +14,18 @@ class UserController extends Controller
         return view('user.mypage', ['user' => Auth::user() ]);
     }
 
-    public function show(User $user)
+    public function show(User $user, Request $request)
     {
-        return view('user.show', compact('user'));
+        $search = $request->input('search');
+        $query = Topic::query();
+        if($search){
+            $query->where('title','LIKE',"%{$search}%")
+                ->where('user_id', $user->id)
+                ->orWhere('contents','LIKE',"%{$search}%")
+                ->where('user_id', $user->id);
+        }
+        $topics = $query->where('user_id', $user->id)->latest()->paginate(5);
+        return view('user.show', compact('user','topics'));
     }
 
     public function name_edit(User $user)

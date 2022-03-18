@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h5 class="card-title">タイトル：{{ $topic->title }}</h5>
                 <p class="card-text">内容：{{ $topic->contents }}</p>
-                <p class="card-text">投稿者：{{ $topic->user->name }}</p>
+                <p class="card-text">投稿者：<a href="{{ route('user.show', $topic->user->id)}}">{{ $topic->user->name }}</a></p>
                 <a href="{{ route('topics.show', $topic) }}" class="btn btn-primary">詳細へ</a>
             </div>
             <div class="card-footer text-muted">
