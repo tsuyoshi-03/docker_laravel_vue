@@ -18,12 +18,11 @@ class TopicController extends Controller
 
     public function index(Request $request){
         $search = $request->input('search');
-        $query = Topic::query();
         if($search){
-            $query->where('title','LIKE',"%{$search}%")
-                ->orWhere('contents','LIKE',"%{$search}%");
+            $topics = Topic::searchAllTopics($search);
+        }else{
+            $topics = Topic::query()->latest()->paginate(5);
         }
-        $topics = $query->latest()->paginate(5);
         return view('topics.index', compact('topics', 'search'));
     }
 

@@ -17,14 +17,11 @@ class UserController extends Controller
     public function show(User $user, Request $request)
     {
         $search = $request->input('search');
-        $query = Topic::query();
         if($search){
-            $query->where('title','LIKE',"%{$search}%")
-                ->where('user_id', $user->id)
-                ->orWhere('contents','LIKE',"%{$search}%")
-                ->where('user_id', $user->id);
+            $topics = Topic::searchUsersTopics($search, $user->id);
+        }else{
+            $topics = Topic::query()->where('user_id', $user->id)->latest()->paginate(5);
         }
-        $topics = $query->where('user_id', $user->id)->latest()->paginate(5);
         return view('user.show', compact('user','topics'));
     }
 
