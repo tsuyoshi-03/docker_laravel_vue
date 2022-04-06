@@ -20,7 +20,7 @@ class UserController extends Controller
         if($search){
             $topics = Topic::searchUsersTopics($search, $user->id);
         }else{
-            $topics = Topic::query()->where('user_id', $user->id)->latest()->paginate(5);
+            $topics = $user->topics()->latest()->paginate(5);
         }
         return view('user.show', compact('user','topics'));
     }
