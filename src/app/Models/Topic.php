@@ -18,19 +18,18 @@ class Topic extends Model
         return $this->belongsTo('App\User');
     }
 
-    public static function searchAllTopics($params){
-        return Topic::query()
-            ->where('title','LIKE',"%{$params}%")
-            ->orWhere('contents','LIKE',"%{$params}%")
-            ->latest()->paginate(5);
+    public static function extractTopics($searchWord, $user = null){
+        $q = Topic::query();
+        if($user){
+            $q->where('title','LIKE',"%{$searchWord}%")
+            ->where('user_id', $user)
+            ->orWhere('contents','LIKE',"%{$searchWord}%")
+            ->where('user_id', $user);
+        }else{
+            $q->where('title','LIKE',"%{$searchWord}%")
+            ->orWhere('contents','LIKE',"%{$searchWord}%");
+        }
+        return $q->latest()->paginate(5);
     }
 
-    public static function searchUsersTopics($params, $user_id){
-        return Topic::query()
-            ->where('title','LIKE',"%{$params}%")
-            ->where('user_id', $user_id)
-            ->orWhere('contents','LIKE',"%{$params}%")
-            ->where('user_id', $user_id)
-            ->latest()->paginate(5);
-    }
 }

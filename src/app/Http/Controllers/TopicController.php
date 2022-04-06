@@ -16,13 +16,10 @@ class TopicController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $search = $request->input('search');
-        if($search){
-            $topics = Topic::searchAllTopics($search);
-        }else{
-            $topics = Topic::query()->latest()->paginate(5);
-        }
+        $topics = Topic::extractTopics($search);
         return view('topics.index', compact('topics', 'search'));
     }
 

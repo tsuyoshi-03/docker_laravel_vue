@@ -17,11 +17,7 @@ class UserController extends Controller
     public function show(User $user, Request $request)
     {
         $search = $request->input('search');
-        if($search){
-            $topics = Topic::searchUsersTopics($search, $user->id);
-        }else{
-            $topics = $user->topics()->latest()->paginate(5);
-        }
+        $topics = Topic::extractTopics($search, $user->id);
         return view('user.show', compact('user','topics'));
     }
 
