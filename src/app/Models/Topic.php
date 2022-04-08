@@ -15,7 +15,7 @@ class Topic extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public static function extractTopics($searchWord, $user = null){
