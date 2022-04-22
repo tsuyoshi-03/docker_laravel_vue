@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 
 class RegisterController extends Controller
 {
@@ -41,6 +42,16 @@ class RegisterController extends Controller
         $this->middleware('guest:admin');
     }
 
+    protected function guard()
+    {
+        return Auth::guard('admin');
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('admin.auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -51,7 +62,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
