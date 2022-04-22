@@ -11,20 +11,14 @@
 |
 */
 
-
-// ['verify' => true] を追記
 Auth::routes(['verify' => true]);
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
-
-// 'verified' を追記
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/','TopicController@index');
 
-    //自ユーザーのみアクセス可能
+    //マイページ
     Route::get('user/mypage', 'UserController@mypage')->name('user.mypage');
-    //各ユーザーの投稿ページ
+    //各ユーザーページ
     Route::get('user/{user}', 'UserController@show')->name('user.show');
     //ユーザーネーム編集
     Route::get('name/{user}/edit', 'UserController@name_edit')->name('name.edit');
@@ -32,4 +26,19 @@ Route::middleware(['auth','verified'])->group(function(){
 
     Route::resource('topics', 'TopicController');
     Route::resource('topics.comments', 'CommentController');
+});
+
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+
+    Auth::routes([
+        'register' => true,
+        'reset'    => false,
+        'verify'   => false
+    ]);
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::resource('home', 'HomeController', ['only' => 'index']);
+    });
+
 });

@@ -24,8 +24,11 @@ class RouteServiceProvider extends ServiceProvider
 
     //public const HOME = '/home';
 
-    //ログイン後topic一覧にジャンプ
+    //一般ユーザー：ログイン後topic一覧にジャンプ
     public const HOME = '/topics';
+    //管理ユーザー
+    public const ADMIN_HOME = '/admin/home';
+
 
     /**
      * Define your route model bindings, pattern filters, etc.
