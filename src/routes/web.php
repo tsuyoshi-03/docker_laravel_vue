@@ -38,6 +38,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     ]);
 
     Route::middleware('auth:admin')->group(function () {
+        Route::get('users', 'UserController@index')->name('users');
         Route::resource('home', 'HomeController', ['only' => 'index']);
     });
 

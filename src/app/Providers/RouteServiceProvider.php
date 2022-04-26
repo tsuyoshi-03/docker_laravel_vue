@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
     //一般ユーザー：ログイン後topic一覧にジャンプ
     public const HOME = '/topics';
     //管理ユーザー
-    public const ADMIN_HOME = '/admin/home';
+    public const ADMIN_HOME = '/admin/users';
 
 
     /**
