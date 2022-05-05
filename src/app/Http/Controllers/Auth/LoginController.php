@@ -42,7 +42,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //ココを修正したら認証後のアクセス制限が効いた
+        $this->middleware('guest:user')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
     }
 
     public function logout(Request $request)
