@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="password">パスワード：</label>
                         <p>********</p>
-                        <a href="#">編集</a>
+                        <a href="{{ route('password.request') }}">編集</a>
                     </div>
                 </div>
             </div>

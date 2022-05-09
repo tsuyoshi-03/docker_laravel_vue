@@ -50,19 +50,4 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
-
-    public function password_edit(User $user)
-    {
-        $this->authorize('update', $user);
-        return view('user.password_edit',compact('user'));
-    }
-
-    public function password_update(Request $request, User $user)
-    {
-        //ユーザー登録と同じバリデーションをかけたい
-        //DB保存
-        //メール送信
-        Auth::logout();
-        return redirect()->route('login');
-    }
 }
